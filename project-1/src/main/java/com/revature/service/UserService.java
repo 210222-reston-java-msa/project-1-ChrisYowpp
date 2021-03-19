@@ -31,8 +31,10 @@ public class UserService {
     for (User u : all) {
       if (u.getuUsername().equals(username)) {
         return u;
-      }
+      } else{
+      continue;
     }
+  }
     return null;
   }
 

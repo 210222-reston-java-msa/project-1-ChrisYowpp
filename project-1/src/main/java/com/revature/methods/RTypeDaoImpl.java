@@ -38,7 +38,7 @@ public class RTypeDaoImpl implements RTypeDao{
   @Override
   public List<RType> selectAll() {
     Session ses = HibernateUtil.getSession();
-    return ses.createQuery("from Reimbursement_type", RType.class).list();
+    return ses.createQuery("from RType", RType.class).list();
   }
 
   @Override

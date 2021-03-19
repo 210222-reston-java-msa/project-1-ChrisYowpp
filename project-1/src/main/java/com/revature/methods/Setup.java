@@ -44,9 +44,12 @@ public class Setup {
     RStatusService.insert(rs3);
 
     Reimbursement r1 = new Reimbursement(2000, "fees", u2, u1, rs1, rt1);
+    Reimbursement r2 = new Reimbursement(3500, "fees", u2, u1, rs2, rt2);
+    Reimbursement r3 = new Reimbursement(5500, "fees", u2, u1, rs3, rt4);
 
     ReimbursementService.insert(r1);
-
+    ReimbursementService.insert(r2);
+    ReimbursementService.insert(r3);
     
 
   }

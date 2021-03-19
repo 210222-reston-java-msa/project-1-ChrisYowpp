@@ -3,7 +3,6 @@ package com.revature.util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.methods.Menus;
 import com.revature.models.LoginCredentials;
 import com.revature.models.User;
 import com.revature.service.UserService;
@@ -49,11 +49,16 @@ public class RequestHelper {
       PrintWriter pw = res.getWriter();
       res.setContentType("application/json");
       pw.println(om.writeValueAsString(uConfirm));
-      log.info(loginUsername + "has successfully logged in"); 
+      log.info(loginUsername + " has successfully logged in"); 
+
+      int menuChoice = Menus.setMenuType(uConfirm);
+      
     } else {
       log.info(loginUsername + " has failed to log in");
       res.setStatus(204);
     }
+
+    
   }
 
   public static void processLogout(HttpServletRequest req, HttpServletResponse res) {
@@ -65,16 +70,22 @@ public class RequestHelper {
       session.invalidate();
     }
     res.setStatus(200);
+
+    try{
+      req.getRequestDispatcher("index.html").forward(req, res);
+    } catch (ServletException | IOException e) {
+      e.printStackTrace();
+    }
   }
 
-  public static void processUsers(HttpServletRequest req, HttpServletResponse res) throws IOException {
-    log.info(UserService.selectAll());
-    res.setContentType("application/json");
-    List<User> allUsers = UserService.selectAll();
-    String json = om.writeValueAsString(allUsers);
-    PrintWriter pw = res.getWriter();
-    pw.println(json);
-  }
+  // public static void processUsers(HttpServletRequest req, HttpServletResponse res) throws IOException {
+  //   log.info(UserService.selectAll());
+  //   res.setContentType("application/json");
+  //   List<User> allUsers = UserService.selectAll();
+  //   String json = om.writeValueAsString(allUsers);
+  //   PrintWriter pw = res.getWriter();
+  //   pw.println(json);
+  // }
 
   public static void processError(HttpServletRequest req, HttpServletResponse res) throws IOException {
     try {
@@ -83,4 +94,30 @@ public class RequestHelper {
       e.printStackTrace();
     }
   }
+
+  //  public static void processReimbursement(HttpServletRequest req, HttpServletResponse res) throws IOException {
+
+  //   try {
+  //     req.getRequestDispatcher("reimbursements.html").forward(req, res);
+  //   } catch (ServletException | IOException e) {
+  //     e.printStackTrace();
+  //   }
+  //   log.info(ReimbursementService.selectAll());
+  //   res.setContentType("Application/json");
+  //   List<Reimbursement> allReimb = ReimbursementService.selectAll();
+  //   String json = om.writeValueAsString(allReimb);
+  //   PrintWriter pw = res.getWriter();
+  //   pw.println(json);
+  //  }
+
+   public static void processReimbursementView(HttpServletRequest req, HttpServletResponse res) throws IOException {
+
+   }
+
+  // public static void processManager(HttpServletRequest req, HttpServletResponse res) throws IOException {
+  //   try {
+  //     req.getRequestDispatcher("")
+  //   }
+  // }
+
 }

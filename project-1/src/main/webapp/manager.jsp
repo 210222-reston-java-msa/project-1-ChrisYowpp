@@ -15,8 +15,8 @@
   <div class="jumbotron">
     <h1 id = "welcome">You are Logged in!</h1>
     <a class = "btn btn success" onclick = "logout()">Logout</a>
-    <a class = "btn btn success" onclick = "users()">Users</a>
-    <a class = "btn btn success" onclick = "reimbs()">Reimbursements</a>
+    <a class = "btn btn success" onclick = "employee()">Employee</a>
+    <a class = "btn btn success" onclick = "manager()">Manager</a>
 
   </div>
 
@@ -46,12 +46,13 @@
       window.location = "http://localhost:8080/project-1/logout";
     }
 
-    function users() {
-      window.location = "http://localhost:8080/project-1/users.jsp";
+    function employee() {
+      window.location = "http://localhost:8080/project-1/employee.html";
     }
 
-    function reimbs() {
-      window.location = "http://localhost:8080/project-1/reimb.jsp";
+    function manager() {
+
+      window.location = "http://localhost:8080/project-1/manager.html";
     }
   </script>
 </body>

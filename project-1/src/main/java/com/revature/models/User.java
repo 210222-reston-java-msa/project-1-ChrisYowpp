@@ -1,5 +1,8 @@
 package com.revature.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,8 +13,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.revature.methods.UserSerializer;
+
+@JsonSerialize(using=UserSerializer.class)
 @Cacheable
 @Entity
 @Table(name="users")
@@ -37,6 +45,12 @@ public class User {
  @Column(name="email")
  private String uEmail;
 
+ @OneToMany(mappedBy="rAuthorFk", fetch = FetchType.LAZY)
+ private List<Reimbursement> reimbList = new ArrayList<>();
+
+ @OneToMany(mappedBy="rResolverFk", fetch=FetchType.LAZY)
+ private List<Reimbursement> reimbResolverList = new ArrayList<>();
+
  @ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
  @JoinColumn(name="role_id_fk")
  private URole uRoleIdFk;
@@ -44,19 +58,32 @@ public class User {
  public User() {
 }
 
-public User(String uUsername, String uPassword, String uFirstName, String uLastName, String uEmail,
-    URole uRoleIdFk) {
+public User(int uId, String uUsername, String uPassword, String uFirstName, String uLastName, String uEmail,
+    List<Reimbursement> reimbList, List<Reimbursement> reimbResolverList, URole uRoleIdFk) {
+  this.uId = uId;
   this.uUsername = uUsername;
   this.uPassword = uPassword;
   this.uFirstName = uFirstName;
   this.uLastName = uLastName;
   this.uEmail = uEmail;
+  this.reimbList = reimbList;
+  this.reimbResolverList = reimbResolverList;
   this.uRoleIdFk = uRoleIdFk;
 }
 
-public User(int uId, String uUsername, String uPassword, String uFirstName, String uLastName, String uEmail,
-    URole uRoleIdFk) {
-  this.uId = uId;
+public User(String uUsername, String uPassword, String uFirstName, String uLastName, String uEmail,
+    List<Reimbursement> reimbList, List<Reimbursement> reimbResolverList, URole uRoleIdFk) {
+  this.uUsername = uUsername;
+  this.uPassword = uPassword;
+  this.uFirstName = uFirstName;
+  this.uLastName = uLastName;
+  this.uEmail = uEmail;
+  this.reimbList = reimbList;
+  this.reimbResolverList = reimbResolverList;
+  this.uRoleIdFk = uRoleIdFk;
+}
+
+public User(String uUsername, String uPassword, String uFirstName, String uLastName, String uEmail, URole uRoleIdFk) {
   this.uUsername = uUsername;
   this.uPassword = uPassword;
   this.uFirstName = uFirstName;
@@ -113,6 +140,22 @@ public void setuEmail(String uEmail) {
   this.uEmail = uEmail;
 }
 
+public List<Reimbursement> getReimbList() {
+  return reimbList;
+}
+
+public void setReimbList(List<Reimbursement> reimbList) {
+  this.reimbList = reimbList;
+}
+
+public List<Reimbursement> getReimbResolverList() {
+  return reimbResolverList;
+}
+
+public void setReimbResolverList(List<Reimbursement> reimbResolverList) {
+  this.reimbResolverList = reimbResolverList;
+}
+
 public URole getuRoleIdFk() {
   return uRoleIdFk;
 }
@@ -125,12 +168,13 @@ public void setuRoleIdFk(URole uRoleIdFk) {
 public int hashCode() {
   final int prime = 31;
   int result = 1;
+  result = prime * result + ((reimbList == null) ? 0 : reimbList.hashCode());
+  result = prime * result + ((reimbResolverList == null) ? 0 : reimbResolverList.hashCode());
   result = prime * result + ((uEmail == null) ? 0 : uEmail.hashCode());
   result = prime * result + ((uFirstName == null) ? 0 : uFirstName.hashCode());
   result = prime * result + uId;
   result = prime * result + ((uLastName == null) ? 0 : uLastName.hashCode());
   result = prime * result + ((uPassword == null) ? 0 : uPassword.hashCode());
-  result = prime * result + ((uRoleIdFk == null) ? 0 : uRoleIdFk.hashCode());
   result = prime * result + ((uUsername == null) ? 0 : uUsername.hashCode());
   return result;
 }
@@ -144,6 +188,16 @@ public boolean equals(Object obj) {
   if (getClass() != obj.getClass())
     return false;
   User other = (User) obj;
+  if (reimbList == null) {
+    if (other.reimbList != null)
+      return false;
+  } else if (!reimbList.equals(other.reimbList))
+    return false;
+  if (reimbResolverList == null) {
+    if (other.reimbResolverList != null)
+      return false;
+  } else if (!reimbResolverList.equals(other.reimbResolverList))
+    return false;
   if (uEmail == null) {
     if (other.uEmail != null)
       return false;
@@ -166,11 +220,6 @@ public boolean equals(Object obj) {
       return false;
   } else if (!uPassword.equals(other.uPassword))
     return false;
-  if (uRoleIdFk == null) {
-    if (other.uRoleIdFk != null)
-      return false;
-  } else if (!uRoleIdFk.equals(other.uRoleIdFk))
-    return false;
   if (uUsername == null) {
     if (other.uUsername != null)
       return false;
@@ -181,9 +230,13 @@ public boolean equals(Object obj) {
 
 @Override
 public String toString() {
-  return "User [uEmail=" + uEmail + ", uFirstName=" + uFirstName + ", uId=" + uId + ", uLastName=" + uLastName
-      + ", uPassword=" + uPassword + ", uRoleIdFk=" + uRoleIdFk + ", uUsername=" + uUsername + "]";
+  return "User [reimbList=" + reimbList + ", reimbResolverList=" + reimbResolverList + ", uEmail=" + uEmail
+      + ", uFirstName=" + uFirstName + ", uId=" + uId + ", uLastName=" + uLastName + ", uPassword=" + uPassword
+      + ", uUsername=" + uUsername + "]";
 }
 
- 
+
+
+
+
 }

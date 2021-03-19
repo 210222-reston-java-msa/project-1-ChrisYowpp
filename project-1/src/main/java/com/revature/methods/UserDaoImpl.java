@@ -38,7 +38,7 @@ public class UserDaoImpl implements UserDao {
   @Override
   public List<User> selectAll() {
     Session ses = HibernateUtil.getSession();
-    return ses.createQuery("from user", User.class).list();
+    return ses.createQuery("from User", User.class).list();
   }
 
   @Override
@@ -50,7 +50,7 @@ public class UserDaoImpl implements UserDao {
   @Override
   public User selectByName(String name) {
     Session ses = HibernateUtil.getSession();
-    List<User> uList = ses.createQuery("from user where name='"+name+"'", User.class).list();
+    List<User> uList = ses.createQuery("from User where name='"+name+"'", User.class).list();
 
     if (uList.isEmpty()) {
       System.out.println("No User found with that name");

@@ -15,8 +15,6 @@
   <div class="jumbotron">
     <h1 id = "welcome">You are Logged in!</h1>
     <a class = "btn btn success" onclick = "logout()">Logout</a>
-    <a class = "btn btn success" onclick = "users()">Users</a>
-    <a class = "btn btn success" onclick = "reimbs()">Reimbursements</a>
 
   </div>
 
@@ -44,14 +42,6 @@
 
       sessionStorage.removeItem('currentUser');
       window.location = "http://localhost:8080/project-1/logout";
-    }
-
-    function users() {
-      window.location = "http://localhost:8080/project-1/users.jsp";
-    }
-
-    function reimbs() {
-      window.location = "http://localhost:8080/project-1/reimb.jsp";
     }
   </script>
 </body>

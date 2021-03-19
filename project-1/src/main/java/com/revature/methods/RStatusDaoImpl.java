@@ -38,7 +38,7 @@ public class RStatusDaoImpl implements RStatusDao{
   @Override
   public List<RStatus> selectAll() {
     Session ses = HibernateUtil.getSession();
-    return ses.createQuery("from reimbursement_status", RStatus.class).list();
+    return ses.createQuery("from RStatus", RStatus.class).list();
   }
 
   @Override
@@ -50,7 +50,7 @@ public class RStatusDaoImpl implements RStatusDao{
   @Override
   public RStatus selectByStatus(String status) {
     Session ses = HibernateUtil.getSession();
-    List<RStatus> rsList = ses.createQuery("from reimbursement_status where status='"+status+"'",RStatus.class).list();
+    List<RStatus> rsList = ses.createQuery("from RStatus where status='"+status+"'",RStatus.class).list();
 
     if (rsList.isEmpty()) {
       System.out.println("No Reimbursement status found");

@@ -10,4 +10,8 @@ public class URoleService {
   public static void insert(URole ur) {
     urDao.insert(ur);
   }
+
+  public static URole selectById(int id) {
+    return urDao.selectById(id);
+  }
 }

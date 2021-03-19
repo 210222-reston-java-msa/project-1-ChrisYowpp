@@ -40,7 +40,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
   @Override
   public List<Reimbursement> selectAll() {
     Session ses = HibernateUtil.getSession();
-    return ses.createQuery("from reimbursement", Reimbursement.class).list();
+    return ses.createQuery("from Reimbursement", Reimbursement.class).list();
   }
 
   @Override
@@ -52,7 +52,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao {
   @Override
   public Reimbursement selectByAmount(int amount) {
     Session ses = HibernateUtil.getSession();
-    List<Reimbursement> rList = ses.createQuery("from reimbursement where amount='"+amount+"'", Reimbursement.class).list();
+    List<Reimbursement> rList = ses.createQuery("from Reimbursement where amount='"+amount+"'", Reimbursement.class).list();
     
     if (rList.isEmpty()) {
       System.out.println("No Reimbursement found for that amount");

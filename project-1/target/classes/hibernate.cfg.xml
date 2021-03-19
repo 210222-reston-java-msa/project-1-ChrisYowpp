@@ -19,7 +19,7 @@
     <property name="hibernate.connection.pool_size">10</property>
 
     <!-- Schema DDL-->
-    <property name="hibernate.hbm2ddl.auto">create</property>
+    <property name="hibernate.hbm2ddl.auto">validate</property>
 
     <!-- Class Mapping -->
     <mapping class="com.revature.models.Reimbursement"/>

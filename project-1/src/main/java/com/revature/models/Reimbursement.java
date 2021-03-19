@@ -122,17 +122,19 @@ public class Reimbursement {
     this.rTypeIdFk = rTypeIdFk;
   }
 
+
+  @Override
+  public String toString() {
+    return "Reimbursement [rAmount=" + rAmount + ", rDescription=" + rDescription + ", rId=" + rId + "]";
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
     result = prime * result + rAmount;
-    result = prime * result + ((rAuthorFk == null) ? 0 : rAuthorFk.hashCode());
     result = prime * result + ((rDescription == null) ? 0 : rDescription.hashCode());
     result = prime * result + rId;
-    result = prime * result + ((rResolverFk == null) ? 0 : rResolverFk.hashCode());
-    result = prime * result + ((rStatusIdFk == null) ? 0 : rStatusIdFk.hashCode());
-    result = prime * result + ((rTypeIdFk == null) ? 0 : rTypeIdFk.hashCode());
     return result;
   }
 
@@ -147,11 +149,6 @@ public class Reimbursement {
     Reimbursement other = (Reimbursement) obj;
     if (rAmount != other.rAmount)
       return false;
-    if (rAuthorFk == null) {
-      if (other.rAuthorFk != null)
-        return false;
-    } else if (!rAuthorFk.equals(other.rAuthorFk))
-      return false;
     if (rDescription == null) {
       if (other.rDescription != null)
         return false;
@@ -159,30 +156,10 @@ public class Reimbursement {
       return false;
     if (rId != other.rId)
       return false;
-    if (rResolverFk == null) {
-      if (other.rResolverFk != null)
-        return false;
-    } else if (!rResolverFk.equals(other.rResolverFk))
-      return false;
-    if (rStatusIdFk == null) {
-      if (other.rStatusIdFk != null)
-        return false;
-    } else if (!rStatusIdFk.equals(other.rStatusIdFk))
-      return false;
-    if (rTypeIdFk == null) {
-      if (other.rTypeIdFk != null)
-        return false;
-    } else if (!rTypeIdFk.equals(other.rTypeIdFk))
-      return false;
     return true;
   }
 
-  @Override
-  public String toString() {
-    return "Reimbursement [rAmount=" + rAmount + ", rAuthorFk=" + rAuthorFk + ", rDescription=" + rDescription
-        + ", rId=" + rId + ", rResolverFk=" + rResolverFk + ", rStatusIdFk=" + rStatusIdFk + ", rTypeIdFk=" + rTypeIdFk
-        + "]";
-  }
+
   
   
 }

@@ -1,10 +1,15 @@
 package com.revature.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +24,9 @@ public class RStatus {
   @Column(name="reimb_status")
   private String rsStatus;
 
+  @OneToMany(mappedBy="rStatusIdFk", fetch=FetchType.LAZY)
+  private List<Reimbursement> reimbStatusList = new ArrayList<>();
+
   public RStatus() {
   }
 
@@ -29,6 +37,17 @@ public class RStatus {
   public RStatus(int rsId, String rsStatus) {
     this.rsId = rsId;
     this.rsStatus = rsStatus;
+  }
+
+  public RStatus(int rsId, String rsStatus, List<Reimbursement> reimbStatusList) {
+    this.rsId = rsId;
+    this.rsStatus = rsStatus;
+    this.reimbStatusList = reimbStatusList;
+  }
+
+  public RStatus(String rsStatus, List<Reimbursement> reimbStatusList) {
+    this.rsStatus = rsStatus;
+    this.reimbStatusList = reimbStatusList;
   }
 
   public int getRsId() {
@@ -47,10 +66,19 @@ public class RStatus {
     this.rsStatus = rsStatus;
   }
 
+  public List<Reimbursement> getReimbStatusList() {
+    return reimbStatusList;
+  }
+
+  public void setReimbStatusList(List<Reimbursement> reimbStatusList) {
+    this.reimbStatusList = reimbStatusList;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
+    result = prime * result + ((reimbStatusList == null) ? 0 : reimbStatusList.hashCode());
     result = prime * result + rsId;
     result = prime * result + ((rsStatus == null) ? 0 : rsStatus.hashCode());
     return result;
@@ -65,6 +93,11 @@ public class RStatus {
     if (getClass() != obj.getClass())
       return false;
     RStatus other = (RStatus) obj;
+    if (reimbStatusList == null) {
+      if (other.reimbStatusList != null)
+        return false;
+    } else if (!reimbStatusList.equals(other.reimbStatusList))
+      return false;
     if (rsId != other.rsId)
       return false;
     if (rsStatus == null) {
@@ -77,7 +110,7 @@ public class RStatus {
 
   @Override
   public String toString() {
-    return "RStatus [rsId=" + rsId + ", rsStatus=" + rsStatus + "]";
+    return "RStatus [reimbStatusList=" + reimbStatusList + ", rsId=" + rsId + ", rsStatus=" + rsStatus + "]";
   }
 
   
